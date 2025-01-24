@@ -3,7 +3,7 @@ import Container from '@mui/material/Container'
 
 const PageContainer = ({ children }) => {
     return (
-        <Container maxWidth="sm" >
+        <Container maxWidth="lg" >
             {children}
         </Container>
     )
