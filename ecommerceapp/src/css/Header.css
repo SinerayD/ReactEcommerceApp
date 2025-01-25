@@ -63,6 +63,7 @@ body {
 .icons {
     display: flex;
     gap: 15px;
+    cursor: pointer;
 }
 
 .icon {
