@@ -9,7 +9,6 @@ const initialState = {
 
 const BASE_URL = "https://fakestoreapi.com/products";
 
-// Async thunk to fetch all products
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
     const response = await axios.get(`${BASE_URL}`);
     return response.data;
