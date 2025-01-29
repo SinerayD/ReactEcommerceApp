@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import '../css/Header.css';
 import { CiShoppingBasket, CiLight } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [theme, setTheme] = useState(false);
+
+    const navigate = useNavigate();
 
     const changeTheme = () => {
         const root = document.getElementById("root");
@@ -33,7 +36,7 @@ const Header = () => {
                 color: theme ? "#fff" : "#ddd",
             }}
         >
-            < div className="logo-section" >
+            < div onClick={() => navigate('/')} className="logo-section" >
                 <img className="logo" src="./src/images/logo.avif" alt="DayDay Logo" />
                 <p className="logo-text">DayDay Limited</p>
             </div >
