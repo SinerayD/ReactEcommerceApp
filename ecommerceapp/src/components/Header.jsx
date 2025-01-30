@@ -3,6 +3,7 @@ import '../css/Header.css';
 import { CiShoppingBasket, CiLight } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import Badge from '@mui/material/Badge'
 
 const Header = () => {
     const [theme, setTheme] = useState(false);
