@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const getFromStorage = () => {
-    if (localStorage.getItem("basket")) {
-        return JSON.parse(localStorage.getItem("basket"));
-    }
-    return [];
-}
+    const storedBasket = localStorage.getItem("basket");
+    return storedBasket ? JSON.parse(storedBasket) : [];
+};
 
 const initialState = {
     products: getFromStorage(),
@@ -15,41 +12,32 @@ const initialState = {
 };
 
 const addToStorage = (basket) => {
-    localStorage.setItem("basket", JSON.stringify(basket))
-}
+    localStorage.setItem("basket", JSON.stringify(basket));
+};
 
 export const basketSlice = createSlice({
     name: "basket",
     initialState,
     reducers: {
         addToBasket: (state, action) => {
-            const findProduct = state.products && state.products.find((product) => product.id === action.payload.id)
+            const findProduct = state.products.find((product) => product.id === action.payload.id);
             if (findProduct) {
-                const extractProducts = state.products.filter((product) => product.id != action.payload.id);
                 findProduct.count += action.payload.count;
-                state.products = [...extractProducts, findProduct];
-                addToStorage(state.products);
+            } else {
+                state.products.push({ ...action.payload, count: 1 });
             }
-
-            else {
-                state.products = [...state.products, action.payload];
-                addToStorage(state.products);
-            }
+            addToStorage(state.products);
         },
-        setDrawer: (state, action) => {
+        setDrawer: (state) => {
             state.drawer = !state.drawer;
         },
         basketTotalAmount: (state) => {
+            state.totalAmount = 0;
             state.products && state.products.map((product) => {
-                state.totalAmount += product.price;
+                state.totalAmount += product.price * product.count;
             })
         }
-
-    },
-    extraReducers: (builder) => {
-        builder
-
-    },
+    }
 });
 
 export const { addToBasket, setDrawer, basketTotalAmount } = basketSlice.actions;
