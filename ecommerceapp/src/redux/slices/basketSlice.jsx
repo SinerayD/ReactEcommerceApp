@@ -10,6 +10,8 @@ const getFromStorage = () => {
 
 const initialState = {
     products: getFromStorage(),
+    drawer: false,
+    totalAmount: 0
 };
 
 const addToStorage = (basket) => {
@@ -33,6 +35,14 @@ export const basketSlice = createSlice({
                 state.products = [...state.products, action.payload];
                 addToStorage(state.products);
             }
+        },
+        setDrawer: (state, action) => {
+            state.drawer = !state.drawer;
+        },
+        basketTotalAmount: (state) => {
+            state.products && state.products.map((product) => {
+                state.totalAmount += product.price;
+            })
         }
 
     },
@@ -42,5 +52,5 @@ export const basketSlice = createSlice({
     },
 });
 
-export const { addToBasket } = basketSlice.actions;
+export const { addToBasket, setDrawer, basketTotalAmount } = basketSlice.actions;
 export default basketSlice.reducer;
