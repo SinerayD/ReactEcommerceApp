@@ -4,11 +4,14 @@ import { CiShoppingBasket, CiLight } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge'
+import { useSelector } from 'react-redux';
 
 const Header = () => {
     const [theme, setTheme] = useState(false);
 
     const navigate = useNavigate();
+
+    const { products } = useSelector((store) => store.basket);
 
     const changeTheme = () => {
         const root = document.getElementById("root");
@@ -41,17 +44,19 @@ const Header = () => {
                 <img className="logo" src="./src/images/logo.avif" alt="DayDay Logo" />
                 <p className="logo-text">DayDay Limited</p>
             </div >
-
             <div className="search-icons-section">
                 <input className="search-input" type="text" placeholder="Search for products..." />
                 <div className="icons">
-                    <CiShoppingBasket className="icon" />
+
                     {theme ? (
                         <FaMoon className="icon" onClick={changeTheme} />
                     ) : (
                         <CiLight className="icon" onClick={changeTheme} />
                     )}
                 </div>
+                <Badge onClick badgeContent={products.length} color="primary">
+                    <CiShoppingBasket className="icon" />
+                </Badge>
             </div>
         </div >
     );
